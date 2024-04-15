@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DayOffApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(DayOffApplicationContext))]
-    [Migration("20240415123642_15.04seed")]
-    partial class _1504seed
+    [Migration("20240415130916_seedMigration")]
+    partial class seedMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,35 +247,23 @@ namespace DayOffApplication.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2d70cd56-99a7-4d57-86e8-072e1d650741"),
+                            Id = new Guid("b14d3996-682c-4ae1-b80f-feeccddbba3c"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
-                            Email = "minetopcuoglu6@gmail.com",
-                            FirstName = "Mine",
-                            LastName = "Topcuoglu",
-                            ManagerId = new Guid("3f2504e0-4f89-11d3-9a0c-0305e82c3301"),
-                            UserType = (byte)30
-                        },
-                        new
-                        {
-                            Id = new Guid("e8b07e0a-3e8c-4996-89e9-8b358093332c"),
-                            Active = true,
-                            CreatedByEmail = "system@gmail.com",
-                            CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
-                            Email = "emretopcuoglu@gmail.com",
-                            FirstName = "Emre",
+                            Email = "gönültopcuoglu@gmail.com",
+                            FirstName = "Gönül",
                             LastName = "Topcuoglu",
                             UserType = (byte)20
                         },
                         new
                         {
-                            Id = new Guid("989aee98-4d10-448f-83cf-ecfd588a912d"),
+                            Id = new Guid("30e4bc17-f1a0-4e30-b010-bd6ced26b0c6"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
-                            Email = "eliftopcuoglu@gmail.com",
-                            FirstName = "Elif",
+                            Email = "osmantopcuoglu@gmail.com",
+                            FirstName = "Osman",
                             LastName = "Topcuoglu",
                             UserType = (byte)10
                         });
