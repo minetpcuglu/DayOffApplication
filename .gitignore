@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/DayOffApplication/DayOffApplication.Application/obj
+/DayOffApplication/DayOffApplication.Application/bin/Debug/net8.0
+/DayOffApplication/DayOffApplication.Core/bin/Debug/net8.0
+/DayOffApplication/DayOffApplication.Core/obj
+/DayOffApplication/DayOffApplication.Infrastructure/bin/Debug/net8.0
+/DayOffApplication/DayOffApplication.Web/bin/Debug/net8.0
+/DayOffApplication/DayOffApplication.Web/obj
+*.suo
+/.vs
+/DayOffApplication/.vs
+/DayOffApplication/DayOffApplication.Infrastructure/obj
