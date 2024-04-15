@@ -1,0 +1,114 @@
+﻿@using DevExtreme.AspNet.Mvc
+
+
+@(
+        Html.DevExtreme().DataGrid<ManagerDTO>()
+        .ID("managerID")
+        .Paging(p => p.PageSize(2))
+        .SearchPanel(s => s.Visible(true))
+        .AllowColumnResizing(true)
+        .HoverStateEnabled(true)
+        .AllowColumnReordering(true)
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .ColumnChooser(c => c.Enabled(true))
+        .Pager(p => p.ShowPageSizeSelector(true).ShowInfo(true).AllowedPageSizes(new[] { 25, 50, 100 }))
+        .Scrolling(p => p.ColumnRenderingMode(GridColumnRenderingMode.Virtual))
+        .Editing(e => e.Mode(GridEditMode.Popup)
+        .AllowUpdating(true)
+        .UseIcons(true)
+        .AllowAdding(true)
+        .AllowDeleting(true)
+        .Popup(p => p
+        .Title("Yönetici Bölüm Ekle/Güncelle")
+        .ShowTitle(true)
+        .Width(800)
+        .Height(800)
+
+        )
+        .Form(f => f.Items(items =>
+        {
+            items.AddGroup()
+            .ColCount(1) //güncelleme ekranı tek sutun haline getirme
+            .ColSpan(2)
+            .Items(groupItems =>
+            {
+                groupItems.AddSimpleFor(m => m.Name);
+                groupItems.AddSimpleFor(m => m.Description);
+
+            });
+        }))
+        )
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.Id).Caption("ID").CssClass("text-center").Visible(false);
+         
+            columns.AddFor(m => m.Name).AllowResizing(true).CssClass("text-left");
+            columns.AddFor(m => m.Description).AllowResizing(true).CssClass("text-left");
+         
+            columns.AddFor(m => m.CreatedByEmail).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.CreationTime).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.ModificationByEmail).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.ModificationTime).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.Active).Caption("Aktif").CssClass("text-center");
+
+            columns.Add().Type(GridCommandColumnType.Buttons).Buttons(b =>
+            {
+                b.Add().Name(GridColumnButtonName.Edit).Text("Düzenle");
+                b.Add().Name(GridColumnButtonName.Delete).Text("Sil");
+            });
+
+        })
+       
+        .DataSource(d => d.Mvc()
+        .Controller("Manager")
+        .LoadAction("GetList")
+        .UpdateMethod("POST")
+        .UpdateAction("Edit")
+        .InsertAction("Post")
+        .DeleteMethod("POST")
+        .DeleteAction("Delete")
+        .Key("Id")
+        )
+        .Export(e => e.Enabled(true)
+            .AllowExportSelectedData(true)
+            .Formats(new[] { "xlsx" })
+        )
+        .OnExporting("exporting")
+
+        )
+
+<script>
+
+    function refreshButtonClicked(e) {
+        $("#managerID").dxDataGrid("instance").refresh();
+    }
+
+
+
+
+
+</script>
+
+<script>
+
+    function exporting(e) {
+        var workbook = new ExcelJS.Workbook();
+        var worksheet = workbook.addWorksheet('Manager');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Manager.xlsx');
+            });
+        });
+    }
+
+</script>

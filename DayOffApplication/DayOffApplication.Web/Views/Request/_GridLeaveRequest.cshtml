@@ -1,0 +1,172 @@
+﻿
+@using DayOffApplication.Core.Enums.LeaveRequests
+@using DayOffApplication.Core.Enums.User
+@using DevExtreme.AspNet.Mvc
+
+
+@(
+        Html.DevExtreme().DataGrid<LeaveRequestDTO>()
+        .ID("leaveRequestID")
+        .Paging(p => p.PageSize(2))
+        .SearchPanel(s => s.Visible(true))
+        .AllowColumnResizing(true)
+        .HoverStateEnabled(true)
+        .AllowColumnReordering(true)
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .ColumnChooser(c => c.Enabled(true))
+        .Pager(p => p.ShowPageSizeSelector(true).ShowInfo(true).AllowedPageSizes(new[] { 25, 50, 100 }))
+        .Scrolling(p => p.ColumnRenderingMode(GridColumnRenderingMode.Virtual))
+        .Editing(e => e.Mode(GridEditMode.Popup)
+        .AllowUpdating(true)
+        .UseIcons(true)
+        .AllowAdding(true)
+        .AllowDeleting(true)
+        .Popup(p => p
+        .Title("İzin Talep Ekle/Güncelle")
+        .ShowTitle(true)
+        .Width(800)
+        .Height(800)
+
+        )
+        .Form(f => f.Items(items =>
+        {
+            items.AddGroup()
+            .ColCount(1) //güncelleme ekranı tek sutun haline getirme
+            .ColSpan(2)
+            .Items(groupItems =>
+            {
+
+                groupItems.AddSimpleFor(m => m.AssignedUserId);
+                groupItems.AddSimpleFor(m => m.LeaveType);
+                groupItems.AddSimpleFor(m => m.StartDate).ColSpan(2).Editor(p => p.DateBox().ID("dbBaslangic")
+                                            .OnFocusOut("dateChanged").DisplayFormat("dd.MM.yyyy HH:mm")
+                                         .Type(DateBoxType.DateTime));
+
+
+                groupItems.AddSimpleFor(m => m.EndDate).ColSpan(2).Editor(p => p.DateBox().ID("dbBitis")
+                                            .OnFocusOut("dateChanged").DisplayFormat("dd.MM.yyyy HH:mm")
+                                         .Type(DateBoxType.DateTime));
+                groupItems.AddSimpleFor(m => m.WorkflowStatus);
+                groupItems.AddSimpleFor(m => m.Reason).Editor(editor => editor.TextArea().Height(100));
+
+            });
+        }))
+        )
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.RequestNumber).Caption("ID").CssClass("text-center").Visible(false);
+         
+            columns.AddFor(m => m.AssignedUserId).Lookup(lookup => lookup
+.DataSource(d => d.Mvc().Controller("Employee").LoadAction("GetList").Key("Id"))
+.DisplayExpr("Email")
+.ValueExpr("Id")).Caption("Personel");
+
+            columns.AddFor(m => m.LeaveType)
+                  .Name("İzin Tipi")
+                  .Lookup(lookup =>
+                  {
+                      lookup.DataSource(EnumHelper<LeaveType>.GetEnumDataSource())
+                            .DisplayExpr("Text")
+                            .ValueExpr("Value");
+                  });
+       
+
+
+            columns.AddFor(m => m.StartDate)
+        .Caption("Başlangıç Tarihi")
+                .Format("dd.MM.yyyy HH:mm");
+
+            columns.AddFor(m => m.EndDate)
+ .Caption("Bitiş Tarihi")
+         .Format("dd.MM.yyyy HH:mm");
+
+
+
+
+            columns.AddFor(m => m.TotalHours).CssClass("text-center").Visible(true);
+            columns.AddFor(m => m.WorkflowStatus)
+         .Name("Talep Durumu")
+         .Lookup(lookup =>
+         {
+             lookup.DataSource(EnumHelper<Workflow>.GetEnumDataSource())
+                   .DisplayExpr("Text")
+                   .ValueExpr("Value");
+         });
+            columns.AddFor(m => m.Reason).CssClass("text-center").Visible(true);
+            columns.AddFor(m => m.CreatedByEmail).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.CreationTime).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.ModificationByEmail).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.ModificationTime).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.Active).Caption("Aktif").CssClass("text-center");
+
+            columns.Add().Type(GridCommandColumnType.Buttons).Buttons(b =>
+            {
+                b.Add().Name(GridColumnButtonName.Edit).Text("Düzenle");
+                b.Add().Name(GridColumnButtonName.Delete).Text("Sil");
+            });
+
+        })
+       
+        .DataSource(d => d.Mvc()
+        .Controller("Request")
+        .LoadAction("GetList")
+        .UpdateMethod("POST")
+        .UpdateAction("Edit")
+        .InsertAction("Post")
+        .DeleteMethod("POST")
+        .DeleteAction("Delete")
+        .Key("Id")
+        )
+        .Export(e => e.Enabled(true)
+            .AllowExportSelectedData(true)
+            .Formats(new[] { "xlsx" })
+        )
+        .OnExporting("exporting")
+
+        )
+
+<script>
+
+    function refreshButtonClicked(e) {
+        $("#leaveRequestID").dxDataGrid("instance").refresh();
+    }
+
+
+
+</script>
+<script>
+
+    function exporting(e) {
+        var workbook = new ExcelJS.Workbook();
+        var worksheet = workbook.addWorksheet('LeaveRequest');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'LeaveRequest.xlsx');
+            });
+        });
+    }
+
+    function dateChanged() {
+        debugger;
+        var bitis = $("#dbBitis").dxDateBox("instance").option("value");
+        var baslangic = $("#dbBaslangic").dxDateBox("instance").option("value");
+        if (bitis === undefined) {
+            bitis = Date.now();
+        }
+        if (baslangic === undefined) {
+            baslangic = Date.now();
+        }
+       
+    }
+
+</script>

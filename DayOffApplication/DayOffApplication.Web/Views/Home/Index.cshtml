@@ -1,0 +1,20 @@
+@using DayOffApplication.Core.Entities.User.Employees
+@using DayOffApplication_Web.Models
+
+<h2>Home</h2>
+
+@(Html.DevExtreme().DataGrid<Employee>()
+    .ShowBorders(true)
+    .DataSource(d => d.Mvc().Controller("Home").LoadAction("Get"))
+    .Columns(columns => {
+        columns.AddFor(m => m.FirstName);
+    })
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+   
+    )
+)

@@ -1,0 +1,20 @@
+﻿@model ManagerDTO
+
+<div class="card card-flush h-md-100">
+    <div class="card-header pt-7">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-800">Yönetici Bölümleri</span>
+            <span class="text-gray-400 mt-1 fw-semibold fs-6">(Yönetici Bölümlerine ait tüm detaylara buradan erişebilirsiniz)</span>
+        </h3>
+        @* <div class="card-toolbar">
+        <a href="" class="btn btn-sm btn-light">
+        <i class="ki-solid ki-arrows-circle fs-1 text-primary"></i>
+        </a>
+        </div> *@
+    </div>
+    <div class="card-body pt-6">
+        <div class="table-responsive table table-row-dashed align-middle gs-0 gy-3 my-0">
+            <partial name="_GridManager.cshtml" model="Model" />
+        </div>
+    </div>
+</div>

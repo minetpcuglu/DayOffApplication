@@ -1,0 +1,129 @@
+﻿@using DayOffApplication.Core.Enums.LeaveRequests
+@using DevExtreme.AspNet.Mvc
+
+
+@(
+        Html.DevExtreme().DataGrid<CumulativeLeaveRequestDTO>()
+        .ID("cumulativeLeaveRequestID")
+        .Paging(p => p.PageSize(2))
+        .SearchPanel(s => s.Visible(true))
+        .AllowColumnResizing(true)
+        .HoverStateEnabled(true)
+        .AllowColumnReordering(true)
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .ColumnChooser(c => c.Enabled(true))
+        .Pager(p => p.ShowPageSizeSelector(true).ShowInfo(true).AllowedPageSizes(new[] { 25, 50, 100 }))
+        .Scrolling(p => p.ColumnRenderingMode(GridColumnRenderingMode.Virtual))
+        .Editing(e => e.Mode(GridEditMode.Popup)
+        .AllowUpdating(true)
+        .UseIcons(true)
+        .AllowAdding(true)
+        .AllowDeleting(true)
+        .Popup(p => p
+        .Title("İzin Talep Ekle/Güncelle")
+        .ShowTitle(true)
+        .Width(800)
+        .Height(800)
+
+        )
+        .Form(f => f.Items(items =>
+        {
+            items.AddGroup()
+            .ColCount(1) 
+            .ColSpan(2)
+            .Items(groupItems =>
+            {
+
+                groupItems.AddSimpleFor(m => m.UserId);
+                groupItems.AddSimpleFor(m => m.LeaveType);
+
+
+            });
+        }))
+        )
+        .Columns(columns =>
+        {
+
+            columns.AddFor(m => m.Id).Visible(false);
+         
+            columns.AddFor(m => m.UserId).Lookup(lookup => lookup
+      .DataSource(d => d.Mvc().Controller("Employee").LoadAction("GetList").Key("Id"))
+      .DisplayExpr("Email")
+      .ValueExpr("Id")).Caption("Personel");
+            columns.AddFor(m => m.LeaveType)
+                       .Name("İzin Tipi")
+                       .Lookup(lookup =>
+                       {
+                           lookup.DataSource(EnumHelper<LeaveType>.GetEnumDataSource())
+                                 .DisplayExpr("Text")
+                                 .ValueExpr("Value");
+                       });
+     
+            columns.AddFor(m => m.TotalHours).CssClass("text-center").Visible(true);
+            columns.AddFor(m => m.Years).CssClass("text-center").Visible(true);
+
+            columns.AddFor(m => m.CreatedByEmail).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.CreationTime).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.ModificationByEmail).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.ModificationTime).CssClass("text-center").Visible(false);
+
+            columns.AddFor(m => m.Active).Caption("Aktif").CssClass("text-center");
+
+            columns.Add().Type(GridCommandColumnType.Buttons).Buttons(b =>
+            {
+                b.Add().Name(GridColumnButtonName.Edit).Text("Düzenle");
+                b.Add().Name(GridColumnButtonName.Delete).Text("Sil");
+            });
+
+        })
+       
+        .DataSource(d => d.Mvc()
+        .Controller("CumulativeLeaveRequest")
+        .LoadAction("GetList")
+        .UpdateMethod("POST")
+        .UpdateAction("Edit")
+        .InsertAction("Post")
+        .DeleteMethod("POST")
+        .DeleteAction("Delete")
+        .Key("Id")
+        )
+        .Export(e => e.Enabled(true)
+            .AllowExportSelectedData(true)
+            .Formats(new[] { "xlsx" })
+        )
+        .OnExporting("exporting")
+
+        )
+
+<script>
+
+    function refreshButtonClicked(e) {
+        $("#cumulativeLeaveRequestID").dxDataGrid("instance").refresh();
+    }
+
+
+
+</script>
+<script>
+
+    function exporting(e) {
+        var workbook = new ExcelJS.Workbook();
+        var worksheet = workbook.addWorksheet('CumulativeLeaveRequest');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'CumulativeLeaveRequest.xlsx');
+            });
+        });
+    }
+
+
+</script>
