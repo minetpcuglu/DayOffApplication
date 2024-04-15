@@ -24,7 +24,7 @@ namespace DayOffApplication.Infrastructure.DataAccess.EntityTypeConfiguration.Se
 					FirstName = "Mine",
 					LastName = "Topcuoglu",
 					Email="minetopcuoglu6@gmail.com",
-					ManagerId= Guid.Parse("9f176152-1b24-4fd5-be02-389b5d5929c"),
+					ManagerId= null,
 					Active=true,
 					CreatedByEmail="system@gmail.com",
 					CreationTime = DateTime.Parse("2024-03-14 14:28:58.9209478"),
