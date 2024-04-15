@@ -244,23 +244,35 @@ namespace DayOffApplication.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b14d3996-682c-4ae1-b80f-feeccddbba3c"),
+                            Id = new Guid("ecad7d11-a405-4956-942b-eafcf2cb379a"),
+                            Active = true,
+                            CreatedByEmail = "system@gmail.com",
+                            CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
+                            Email = "minetopcuoglu6@gmail.com",
+                            FirstName = "Mine",
+                            LastName = "Topcuoglu",
+                            ManagerId = new Guid("01aba89d-9996-442e-9bbf-f6353ca0392e"),
+                            UserType = (byte)30
+                        },
+                        new
+                        {
+                            Id = new Guid("4c26c912-1364-4d48-b028-fff51c32da28"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
                             Email = "gönültopcuoglu@gmail.com",
-                            FirstName = "Gönül",
+                            FirstName = "Emre",
                             LastName = "Topcuoglu",
                             UserType = (byte)20
                         },
                         new
                         {
-                            Id = new Guid("30e4bc17-f1a0-4e30-b010-bd6ced26b0c6"),
+                            Id = new Guid("52985816-c3d5-4b21-bbbe-d6e5c7434c4c"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
                             Email = "osmantopcuoglu@gmail.com",
-                            FirstName = "Osman",
+                            FirstName = "Elif",
                             LastName = "Topcuoglu",
                             UserType = (byte)10
                         });
@@ -308,6 +320,17 @@ namespace DayOffApplication.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Manager");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9f176152-1b24-4fd5-be02-389b5d5929c9"),
+                            Active = true,
+                            CreatedByEmail = "system@gmail.com",
+                            CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
+                            Description = "IT",
+                            Name = "IT"
+                        });
                 });
 
             modelBuilder.Entity("DayOffApplication.Core.Entities.LeaveRequests.CumulativeLeaveRequest", b =>

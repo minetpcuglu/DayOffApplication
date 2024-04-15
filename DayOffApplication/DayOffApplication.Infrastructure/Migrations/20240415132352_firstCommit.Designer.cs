@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DayOffApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(DayOffApplicationContext))]
-    [Migration("20240415082549_CumulativeLeaveRequestUpdate")]
-    partial class CumulativeLeaveRequestUpdate
+    [Migration("20240415132352_firstCommit")]
+    partial class firstCommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,33 +247,34 @@ namespace DayOffApplication.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("590c1b36-f5f6-4c38-995c-da43c194c511"),
+                            Id = new Guid("ecad7d11-a405-4956-942b-eafcf2cb379a"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
                             Email = "minetopcuoglu6@gmail.com",
                             FirstName = "Mine",
                             LastName = "Topcuoglu",
+                            ManagerId = new Guid("01aba89d-9996-442e-9bbf-f6353ca0392e"),
                             UserType = (byte)30
                         },
                         new
                         {
-                            Id = new Guid("5f5e5f53-dc99-4fdb-9602-604475d8fdcd"),
+                            Id = new Guid("4c26c912-1364-4d48-b028-fff51c32da28"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
-                            Email = "emretopcuoglu@gmail.com",
+                            Email = "gönültopcuoglu@gmail.com",
                             FirstName = "Emre",
                             LastName = "Topcuoglu",
                             UserType = (byte)20
                         },
                         new
                         {
-                            Id = new Guid("aca3b3cd-9376-47ea-b8c7-0b26815ba707"),
+                            Id = new Guid("52985816-c3d5-4b21-bbbe-d6e5c7434c4c"),
                             Active = true,
                             CreatedByEmail = "system@gmail.com",
                             CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
-                            Email = "eliftopcuoglu@gmail.com",
+                            Email = "osmantopcuoglu@gmail.com",
                             FirstName = "Elif",
                             LastName = "Topcuoglu",
                             UserType = (byte)10
@@ -322,6 +323,17 @@ namespace DayOffApplication.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Manager");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9f176152-1b24-4fd5-be02-389b5d5929c9"),
+                            Active = true,
+                            CreatedByEmail = "system@gmail.com",
+                            CreationTime = new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478),
+                            Description = "IT",
+                            Name = "IT"
+                        });
                 });
 
             modelBuilder.Entity("DayOffApplication.Core.Entities.LeaveRequests.CumulativeLeaveRequest", b =>

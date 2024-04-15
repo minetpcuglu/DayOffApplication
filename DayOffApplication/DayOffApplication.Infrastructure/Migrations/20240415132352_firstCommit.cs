@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DayOffApplication.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstCommit : Migration
+    public partial class firstCommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,7 +69,7 @@ namespace DayOffApplication.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LeaveType = table.Column<byte>(type: "tinyint", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TotalHours = table.Column<int>(type: "int", nullable: true),
+                    TotalHours = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Years = table.Column<int>(type: "int", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -155,16 +155,22 @@ namespace DayOffApplication.Infrastructure.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Employee",
-                columns: new[] { "Id", "Active", "CreatedByEmail", "CreationTime", "DeletedByEmail", "DeletionTime", "Email", "FirstName", "LastName", "ManagerId", "ModificationByEmail", "ModificationTime", "UserType" },
-                values: new object[,]
-                {
-                    { new Guid("29850767-5960-4f4c-b607-92dd7b48fb1b"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "emretopcuoglu@gmail.com", "Emre", "Topcuoglu", null, null, null, (byte)20 },
-                    { new Guid("42784bfe-5a02-412f-8b0a-16d259bece34"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "minetopcuoglu6@gmail.com", "Mine", "Topcuoglu", null, null, null, (byte)30 },
-                    { new Guid("7944ecb6-cda5-4c63-8b4f-b66b0e19751c"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "eliftopcuoglu@gmail.com", "Elif", "Topcuoglu", null, null, null, (byte)10 }
-                });
+      
 
+            migrationBuilder.InsertData(
+                table: "Manager",
+                columns: new[] { "Id", "Active", "CreatedByEmail", "CreationTime", "DeletedByEmail", "DeletionTime", "Description", "ModificationByEmail", "ModificationTime", "Name" },
+                values: new object[] { new Guid("9f176152-1b24-4fd5-be02-389b5d5929c9"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "IT", null, null, "IT" });
+
+            migrationBuilder.InsertData(
+          table: "Employee",
+          columns: new[] { "Id", "Active", "CreatedByEmail", "CreationTime", "DeletedByEmail", "DeletionTime", "Email", "FirstName", "LastName", "ManagerId", "ModificationByEmail", "ModificationTime", "UserType" },
+          values: new object[,]
+          {
+                    { new Guid("4c26c912-1364-4d48-b028-fff51c32da28"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "gönültopcuoglu@gmail.com", "Emre", "Topcuoglu", null, null, null, (byte)20 },
+                    { new Guid("52985816-c3d5-4b21-bbbe-d6e5c7434c4c"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "osmantopcuoglu@gmail.com", "Elif", "Topcuoglu", null, null, null, (byte)10 },
+                    { new Guid("ecad7d11-a405-4956-942b-eafcf2cb379a"), true, "system@gmail.com", new DateTime(2024, 3, 14, 14, 28, 58, 920, DateTimeKind.Unspecified).AddTicks(9478), null, null, "minetopcuoglu6@gmail.com", "Mine", "Topcuoglu", new Guid("9f176152-1b24-4fd5-be02-389b5d5929c9"), null, null, (byte)30 }
+          });
             migrationBuilder.CreateIndex(
                 name: "IX_CumulativeLeaveRequest_UserId",
                 table: "CumulativeLeaveRequest",
