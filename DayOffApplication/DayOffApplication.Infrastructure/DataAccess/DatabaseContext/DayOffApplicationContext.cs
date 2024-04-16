@@ -31,7 +31,7 @@ namespace DayOffApplication.Infrastructure.DataAccess.DatabaseContext
 
 		/// <summary>
 		/// DayOffApplicationContext sınıfının bulunduğu derlemedeki
-		/// tüm Fluent API tablo yapılandırma sınıflarını (EntityTypeConfiguration sınıfları) kullanarak
+		/// tüm Fluent API, Data Seed vb.. tablo yapılandırma sınıflarını (EntityTypeConfiguration sınıfları) kullanarak
 		/// model yapılandırmasını uygular.
 		/// </summary>
 		/// <param name="modelBuilder"></param>

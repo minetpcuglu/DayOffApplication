@@ -20,12 +20,8 @@ namespace DayOffApplication.Infrastructure.DataAccess.EntityTypeConfiguration.Se
         {
 
             builder.HasData(
-
-
                 new Manager()
-                { Id = Guid.NewGuid(), Name = "IT", Description = "IT", Active = true, CreatedByEmail = "system@gmail.com", CreationTime = DateTime.Parse("2024-03-14 14:28:58.9209478"), DeletedByEmail = null, DeletionTime = null, ModificationByEmail = null, ModificationTime = null });
-
-               
+                { Id = Guid.NewGuid(), Name = "IT", Description = "IT", Active = true, CreatedByEmail = "system@gmail.com", CreationTime = DateTime.Parse("2024-03-14 14:28:58.9209478"), DeletedByEmail = null, DeletionTime = null, ModificationByEmail = null, ModificationTime = null });         
         }
     }
 }

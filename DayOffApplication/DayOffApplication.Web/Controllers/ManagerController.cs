@@ -99,9 +99,9 @@ namespace DayOffApplication.Web.Controllers
         [HttpPost]
         public IActionResult Post(string values)
         {
-            var newS = new Manager();
-            JsonConvert.PopulateObject(values, newS);
-            _managerRepository.AddAsync(newS);
+            var insert = new Manager();
+            JsonConvert.PopulateObject(values, insert);
+            _managerRepository.AddAsync(insert);
 
             return RedirectToAction("Index");
         }

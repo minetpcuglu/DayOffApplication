@@ -27,7 +27,7 @@ namespace DayOffApplication_Web.Controllers {
 		[HttpGet]
         public async Task<object> Get(DataSourceLoadOptions loadOptions) {
             var value =await _employeeRepository.ListAsync();
-			var customerDto = _mapper.Map<EmployeeDTO>(value);
+			var employeeDto = _mapper.Map<EmployeeDTO>(value);
 
 			return DataSourceLoader.Load(value, loadOptions);
 		

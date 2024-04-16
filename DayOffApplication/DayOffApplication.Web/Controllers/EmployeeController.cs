@@ -22,7 +22,6 @@ namespace DayOffApplication.Web.Controllers
 		public EmployeeController(IRepositoryBase<Employee> employeeRepository, IMapper mapper)
 		{
 			_employeeRepository = employeeRepository;
-		
 			_mapper = mapper;
 		}
 
@@ -99,11 +98,11 @@ namespace DayOffApplication.Web.Controllers
         /// <returns></returns>
       
         [HttpPost]
-        public IActionResult Post(string values)
+        public async Task< IActionResult> Post(string values)
         {
             var newEmployee = new Employee();
             JsonConvert.PopulateObject(values, newEmployee);
-            _employeeRepository.AddAsync(newEmployee);
+            await _employeeRepository.AddAsync(newEmployee);
 
             return RedirectToAction("Index");
         }

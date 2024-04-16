@@ -22,9 +22,7 @@ namespace DayOffApplication.Web.Controllers
         public CumulativeLeaveRequestController(IRepositoryBase<CumulativeLeaveRequest> cumulativeLeaveRequestRepository, IMapper mapper)
         {
             _cumulativeLeaveRequestRepository = cumulativeLeaveRequestRepository;
-           
             _mapper = mapper;
-
         }
 
         /// <summary>
@@ -45,13 +43,10 @@ namespace DayOffApplication.Web.Controllers
         [HttpGet]
         public async Task<object> GetList(DataSourceLoadOptions loadOptions)
         {
-
             var specification = new CumulativeLeaveRequestSpecification(true);
             var res = await _cumulativeLeaveRequestRepository.ListAsync(specification);
-
             _mapper.Map<List<CumulativeLeaveRequestDTO>>(res);
             return DataSourceLoader.Load(res, loadOptions);
-
         }
 
 
@@ -101,9 +96,9 @@ namespace DayOffApplication.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(string values)
         {
-            var news = new CumulativeLeaveRequest();
-            JsonConvert.PopulateObject(values, news);
-            await _cumulativeLeaveRequestRepository.AddAsync(news);
+            var insert = new CumulativeLeaveRequest();
+            JsonConvert.PopulateObject(values, insert);
+            await _cumulativeLeaveRequestRepository.AddAsync(insert);
 
             return RedirectToAction("Index");
         }
