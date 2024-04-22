@@ -4,11 +4,12 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using Business.DependencyResolvers.Autofac;
 using DayOffApplication.Application.DependencyResolvers.Autofac;
-using DayOffApplication.Web.Configuration;
+
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using DayOffApplication.Web.AutoMapper;
 using AutoMapper.EquivalencyExpression;
+using DayOffApplication.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

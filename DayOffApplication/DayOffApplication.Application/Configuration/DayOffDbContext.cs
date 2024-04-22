@@ -1,12 +1,17 @@
-﻿
-
-using DayOffApplication.Infrastructure.DataAccess.DatabaseContext;
+﻿using DayOffApplication.Infrastructure.DataAccess.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DayOffApplication.Web.Configuration
+namespace DayOffApplication.Application.Configuration
 {
-	public static class DayOffDbContext
-	{
+    public static class DayOffDbContext
+    {
         /// <summary>
 		/// Veritabanı bağlantı dizesi, yapılandırma nesnesi (IConfiguration) aracılığıyla alınır. Bu, GetConnectionString yöntemi kullanılarak "SqlServer" adındaki bağlantı dizesi alınır
 		/// services.AddDbContext<DayOffApplicationContext> kullanılarak, DayOffApplicationContext sınıfı için bağımlılık enjeksiyonu yapılandırması eklenir. 
@@ -15,14 +20,14 @@ namespace DayOffApplication.Web.Configuration
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void AddMyDbContext(this IServiceCollection services, IConfiguration configuration)
-		{
-			string connectionString = configuration.GetConnectionString("SqlServer");
-			services.AddDbContext<DayOffApplicationContext>(options => options.UseSqlServer(connectionString, builder =>
-			{
-				
-				builder.CommandTimeout(180);  
-			}), ServiceLifetime.Transient);
+        {
+            string connectionString = configuration.GetConnectionString("SqlServer");
+            services.AddDbContext<DayOffApplicationContext>(options => options.UseSqlServer(connectionString, builder =>
+            {
 
-		}
-	}
+                builder.CommandTimeout(180);
+            }), ServiceLifetime.Transient);
+
+        }
+    }
 }
